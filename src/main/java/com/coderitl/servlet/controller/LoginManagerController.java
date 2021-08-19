@@ -1,4 +1,4 @@
-package com.coderitl.controller;
+package com.coderitl.servlet.controller;
 
 import com.coderitl.entity.Manager;
 import com.coderitl.service.ManagerService;
@@ -12,33 +12,30 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/loginManager")
+@WebServlet("/mangerLogin")
 public class LoginManagerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-// 1. 处理乱码
-        req.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html;charset=UTF-8");
-
+        // 1. 处理乱码
+        req.setCharacterEncoding("utf-8");
+        resp.setContentType("text/html;charset=utf-8");
         // 2. 收参
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-
-        // 3. 调用业务逻辑
+        // 调用业务逻辑
         ManagerService managerService = new ManagerServiceImpl();
         Manager mgr = managerService.login(username, password);
-
-        // 4. 处理结果
         if (mgr != null) {
-            // 登陆成功 将管理员信息存储在 Session
+            // 管理员存在 创建 Session
             HttpSession session = req.getSession();
-            // 存储登录成功的 mgr
             session.setAttribute("mgr", mgr);
-            // 跳转目标方式
-            resp.sendRedirect("/Session_war_exploded/ShowAllController");
+            // 重定向到显示所有数据页面
+            resp.sendRedirect("/JavaServlet_war_exploded/managershowall");
         } else {
-            resp.sendRedirect("/Session_war_exploded/loginmgr.html");
+            // 重定向到重新登录页面
+            resp.sendRedirect("/JavaServlet_war_exploded/managerLogin.html");
         }
+
     }
 
     @Override

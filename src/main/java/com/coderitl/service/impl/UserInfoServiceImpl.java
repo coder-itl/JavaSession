@@ -9,21 +9,18 @@ import com.coderitl.utils.Utils;
 import java.util.List;
 
 public class UserInfoServiceImpl implements UserInfoService {
-
-    // TODO: 为什么要这样做 :=> 联想用户登录要操作的业务逻辑
     private UserInfoDao userInfoDao = new UserInfoDaoImpl();
 
     @Override
     public UserInfo userLogin(String username, String password) {
         UserInfo result = null;
+        // 做什么事？
         try {
-            // 开启事务
+            // 1. 开启事务
             Utils.begin();
-            // service 又要怎么操作
+            // 2. 查询
             UserInfo userInfo = userInfoDao.selectOne(username);
-
             if (userInfo != null) {
-                // 就是查询到结果，返回给 servlet
                 if (userInfo.getPassword().equals(password)) {
                     result = userInfo;
                 }

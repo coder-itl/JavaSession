@@ -8,10 +8,13 @@ public class UserInfo {
     public UserInfo() {
     }
 
-    public UserInfo(int id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 
     public int getId() {
@@ -38,12 +41,9 @@ public class UserInfo {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "UserInfo{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public UserInfo(int id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
     }
 }

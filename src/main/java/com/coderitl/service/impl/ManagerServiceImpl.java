@@ -13,14 +13,11 @@ public class ManagerServiceImpl implements ManagerService {
     public Manager login(String username, String password) {
         Manager manager = null;
         try {
-            // 开启事务控制
             Utils.begin();
-            // 调用业务逻辑
-            Manager selectManager = managerDao.select(username);
-            if (selectManager != null) {
-                // 对密码处理
-                if (selectManager.getPassword().equals(password)) {
-                    manager = selectManager;
+            Manager select = managerDao.select(username);
+            if (select != null) {
+                if (select.getPassword().equals(password)) {
+                    manager = select;
                 }
             }
             Utils.commit();

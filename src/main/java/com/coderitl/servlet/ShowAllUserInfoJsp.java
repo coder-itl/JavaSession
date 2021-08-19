@@ -1,22 +1,25 @@
-package com.coderitl.jsp;
+package com.coderitl.servlet;
 
 import com.coderitl.entity.UserInfo;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(name = "ShowAllJsp", value = "/ShowAllJsp")
-public class ShowAllJsp extends HttpServlet {
+@WebServlet("/showalljsp")
+public class ShowAllUserInfoJsp extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=utf-8");
-        List<UserInfo> userinfoList = (List) request.getAttribute("userInfo");
-        PrintWriter printWriter = response.getWriter();
-        if (userinfoList != null) {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html;charset=UTF-8");
+        // 获取
+        List<UserInfo> userInfos = (List) req.getAttribute("userinfo");
+        PrintWriter printWriter = resp.getWriter();
+        if (userInfos != null) {
             printWriter.println("<html>");
             printWriter.println("<head>");
             printWriter.println("<meta charset='UTF-8'>");
@@ -32,7 +35,7 @@ public class ShowAllJsp extends HttpServlet {
             printWriter.println("</tr>");
 
 
-            for (UserInfo userInfo : userinfoList) {
+            for (UserInfo userInfo : userInfos) {
                 printWriter.println("<tr>");
                 printWriter.println("<td>" + userInfo.getId() + "</td>");
                 printWriter.println("<td>" + userInfo.getUsername() + "</td>");
@@ -47,11 +50,10 @@ public class ShowAllJsp extends HttpServlet {
         } else {
             printWriter.println("<h1>没有用户信息</h1>");
         }
-
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
     }
 }

@@ -15,11 +15,12 @@ public class ManagerDaoImpl implements ManagerDao {
     public Manager select(String username) {
         try {
             String sql = "select * from manager where username=?";
-            Manager manager = queryRunner.query(Utils.getConnection(), sql, new BeanHandler<Manager>(Manager.class), username);
-            return manager;
-        } catch (SQLException e) {
-            e.printStackTrace();
+            Manager query = queryRunner.query(Utils.getConnection(), sql, new BeanHandler<Manager>(Manager.class), username);
+            return query;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
+
         return null;
     }
 }
